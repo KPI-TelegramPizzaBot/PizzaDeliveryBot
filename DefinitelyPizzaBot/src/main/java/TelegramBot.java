@@ -7,6 +7,12 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 //import org.apache.log4j.*;
 
 
@@ -28,8 +34,9 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void sendTextMsg(Message msg, String text) {
         try {
             execute(new SendMessage().setChatId(msg.getChatId()).setText(text));
-        } catch (Exception e) {
-//            LOG.error("Can't send Text message: ", e);
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
         }
     }
 
@@ -53,17 +60,23 @@ public class TelegramBot extends TelegramLongPollingBot {
 
 
     public void onUpdateReceived(Update update) {
-        sendTextMsg(update.getMessage(), "Brave new world");
+        PizzaAPI api = new PizzaAPI();
+        try {
+            sendTextMsg(update.getMessage(), api.GetSomeInformation());
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
         System.out.println("recieved");
     }
 
 
     public String getBotUsername() {
-        return "Dumpinieks_Bot";
+        return "DefinitelyPizzaBot";
     }
 
     @Override
     public String getBotToken() {
-        return "";
+        return "692413877:AAG-dl68YscsdPEguKl7vq7cLo6hevJthpQ";
     }
 }
