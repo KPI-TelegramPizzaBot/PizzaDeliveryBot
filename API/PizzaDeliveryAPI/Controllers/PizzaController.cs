@@ -12,9 +12,9 @@ namespace PizzaDeliveryAPI.Controllers
     {
         // GET api/pizza
         [HttpGet]
-        public ActionResult<string> Get()
+        public ActionResult<int> Get()
         {
-            return "PizzaDelivery";
+            return 2;
         }
 
         // GET api/pizza/5
