@@ -12,9 +12,12 @@ namespace PizzaDeliveryAPI.Controllers
     {
         // GET api/pizza
         [HttpGet]
-        public ActionResult<string> Get()
+        public ActionResult<List<string>> Get()
         {
-            return "PizzaDelivery";
+            List<string> res = new List<string>();
+            res.Add("Pizza1");
+            res.Add("Pizza2");
+            return res;
         }
 
         // GET api/pizza/5
