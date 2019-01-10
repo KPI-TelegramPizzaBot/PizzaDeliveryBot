@@ -3,25 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PizzaDeliveryAPI.Models;
+using PizzaDeliveryAPI.Repository;
 
 namespace PizzaDeliveryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PizzaController :ControllerBase
+    public class PizzaController : ControllerBase
     {
+        private IRepository<Pizza> _rep;
+
+        public PizzaController(IRepository<Pizza> repository)
+        {
+            _rep = repository;
+        }
+
         // GET api/pizza
         [HttpGet]
-        public ActionResult<int> Get()
+        public IEnumerable<Pizza> Get()
         {
-            return 2;
+            return _rep.GetAll();
         }
 
         // GET api/pizza/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public Pizza Get(int id)
         {
-            return "PizzaDelivery";
+            return _rep.Get(id);
         }
 
         // POST api/pizza
@@ -40,6 +49,8 @@ namespace PizzaDeliveryAPI.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _rep.Delete(id);
+            _rep.Save();
         }
     }
 }
